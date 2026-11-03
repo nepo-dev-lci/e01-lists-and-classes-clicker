@@ -32,20 +32,6 @@ public class GameManager : MonoBehaviour
 	{
 		// TODO foreach enemy template, spawn an enemy of that type
 		// TODO write a for to spawn as many enemies as a `howManyToSpawn`
-		foreach (EnemyTemplate t in roundRoster)
-		{
-			for (int i=0; i<t.howManyToSpawn; i++)
-			{
-				GameObject go = Instantiate(enemyPrefab);
-
-				Vector3 pos = new Vector3(Random.Range(minX, maxX), spawnY, 0f);
-				go.transform.position = pos;
-
-				Enemy e = go.GetComponent<Enemy>();
-				e.Init(t, this);
-				active.Add(e);
-			}
-		}
 		UpdateHUD();
 	}
 
@@ -54,15 +40,6 @@ public class GameManager : MonoBehaviour
 		if (gameOver) return;
 
 		// TODO foreach enemy, if they are behind the (defeatLineY), set gameOver to true and show a message
-		foreach (Enemy e in active)
-		{
-			if (e.transform.position.y < defeatLineY)
-			{
-				gameOver = true;
-				Debug.Log("Game over — an enemy reached the bottom!");
-				return;
-			}
-		}
 	}
 
 	public void OnEnemyClicked(Enemy e)
@@ -88,18 +65,6 @@ public class GameManager : MonoBehaviour
 		List<Enemy> toRemove = new List<Enemy>();
 
 		// TODO delete all enemies
-		foreach (Enemy e in active)
-		{
-			e.TakeDamage(5);
-			if (e.health <= 0) toRemove.Add(e);
-			// active.Remove(e);  // <-- uncomment to show the exception
-		}
-
-		foreach (Enemy e in toRemove)
-		{
-			active.Remove(e);
-			Destroy(e.gameObject);
-		}
 
 		UpdateHUD();
 		if (active.Count == 0) RoundCleared();
