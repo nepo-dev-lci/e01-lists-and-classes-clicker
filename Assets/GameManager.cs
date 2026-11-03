@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     void SpawnRound()
     {
+        // TODO foreach enemy template, spawn an enemy of that type
+        // TODO write a for to spawn as many enemies as a `howManyToSpawn`
         foreach (EnemyTemplate t in roundRoster)
         {
             for (int i=0; i<t.howManyToSpawn; i++)
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameOver) return;
 
+        // TODO foreach enemy, if they are behind the (defeatLineY), set gameOver to true and show a message
         foreach (Enemy e in active)
         {
             if (e.transform.position.y < defeatLineY)
@@ -84,6 +87,7 @@ public class GameManager : MonoBehaviour
 
         List<Enemy> toRemove = new List<Enemy>();
 
+        // TODO delete all enemies
         foreach (Enemy e in active)
         {
             e.TakeDamage(5);
